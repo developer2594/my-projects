@@ -2,16 +2,22 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    meta: { layout: "main" },
-    component: () => import("@/views/HomeView.vue"),
+    path: "/register",
+    name: "register",
+    meta: { layout: "empty" },
+    component: () => import("@/views/RegisterView.vue"),
   },
   {
     path: "/login",
     name: "login",
     meta: { layout: "empty" },
     component: () => import("@/views/LoginView.vue"),
+  },
+  {
+    path: "/",
+    name: "home",
+    meta: { layout: "main" },
+    component: () => import("@/views/HomeView.vue"),
   },
   {
     path: "/categories",
@@ -48,11 +54,6 @@ const routes = [
     name: "record",
     meta: { layout: "main" },
     component: () => import("@/views/RecordView.vue"),
-  },
-  {
-    path: "/register",
-    name: "register",
-    component: () => import("@/views/RegisterView.vue"),
   },
 ];
 
