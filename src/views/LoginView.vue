@@ -23,8 +23,37 @@
 
       <p class="center">
         Нет аккаунта?
-        <a href="/">Зарегистрироваться</a>
+        <router-link to="register">Зарегистрироваться</router-link>
       </p>
     </div>
   </form>
 </template>
+
+<script>
+// import { useVuelidate } from "@vuelidate/core";
+// import { required, email, minLenght } from "@vuelidate/validators";
+// export default {
+//   setup() {
+//     return { $v: useVuelidate };
+//   },
+//   name: "logIn",
+//   data: () => ({
+//     email: "",
+//     password: "",
+//   }),
+//   validations: {
+//     email: { email, required },
+//     password: { required, minLenght: minLenght(6) },
+//   },
+//   methods: {
+//     submitHandler() {
+//       if (this.$v.$invalid) {
+//         this.$v.$touch();
+//         return;
+//       }
+//       this.$router.push("/");
+//     },
+//   },
+// };
+//
+</script>

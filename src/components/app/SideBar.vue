@@ -1,13 +1,12 @@
 <template>
-  <ul class="sidenav app-sidenav" :class="{ open: 'value' }">
+  <ul class="sidenav app-sidenav" :class="{ open: value }">
     <li v-for="link in links" :key="link.url">
       <router-link
         active-class="active"
         :to="link.url"
         :exact="link.exact"
         class="waves-effect waves-orange pointer"
-      >
-        {{ link.title }}
+        >{{ link.title }}
       </router-link>
     </li>
   </ul>
@@ -19,7 +18,7 @@ export default {
 
   data: () => ({
     links: [
-      { title: "Счет", url: "/" },
+      { title: "Счет", url: "/", exact: true },
       { title: "История", url: "/history" },
       { title: "Планирование", url: "/planning" },
       { title: "Новая запись", url: "/record" },
