@@ -73,7 +73,7 @@ export default {
     },
   },
   beforeUnmount() {
-    //clearInterval(this.interval);
+    clearInterval(this.interval);
     if (this.dropdown && this.dropdown.destroy) {
       this.dropdown.destroy();
     }

@@ -1,21 +1,47 @@
 <template>
-  <form class="card auth-card">
+  <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
-      <div class="input-field">
-        <input id="email" type="text" class="validate" />
-        <label for="email">Email</label>
-        <small class="helper-text invalid">Email</small>
+      <div
+        class="input-field form-group"
+        :class="{ error: v$.form.email.$errors.length }"
+      >
+        <input id="email" type="text" v-model="v$.form.email.$model" />
+        <label for="email" class="form-label">Email</label>
+        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+        <small
+          v-for="(error, index) of v$.form.email.$errors"
+          :key="index"
+          class="helper-text input-errors error-msg"
+          >Email: {{ error.$message }}</small
+        >
       </div>
-      <div class="input-field">
-        <input id="password" type="password" class="validate" />
-        <label for="password">Пароль</label>
-        <small class="helper-text invalid">Password</small>
+      <div
+        class="input-field form-group"
+        :class="{ error: v$.form.password.$errors.length }"
+      >
+        <input
+          id="password"
+          type="password"
+          v-model="v$.form.password.$model"
+        />
+        <div class="pre-icon os-icon os-icon-fingerprint"></div>
+        <label for="password" class="form-label">Пароль</label>
+        <small
+          v-for="(error, index) of v$.form.password.$errors"
+          :key="index"
+          class="helper-text input-errors error-msg"
+          >Password: {{ error.$message }}</small
+        >
       </div>
     </div>
     <div class="card-action">
       <div>
-        <button class="btn waves-effect waves-light auth-submit" type="submit">
+        <button
+          :disabled="v$.form.$invalid"
+          class="btn waves-effect waves-light auth-submit"
+          type="submit"
+        >
           Войти
           <i class="material-icons right">send</i>
         </button>
@@ -29,31 +55,53 @@
   </form>
 </template>
 
+<style scoped>
+.error-msg {
+  color: red;
+}
+.form-label {
+  color: rgba(153, 235, 21, 0.867);
+}
+</style>
+
 <script>
-// import { useVuelidate } from "@vuelidate/core";
-// import { required, email, minLenght } from "@vuelidate/validators";
-// export default {
-//   setup() {
-//     return { $v: useVuelidate };
-//   },
-//   name: "logIn",
-//   data: () => ({
-//     email: "",
-//     password: "",
-//   }),
-//   validations: {
-//     email: { email, required },
-//     password: { required, minLenght: minLenght(6) },
-//   },
-//   methods: {
-//     submitHandler() {
-//       if (this.$v.$invalid) {
-//         this.$v.$touch();
-//         return;
-//       }
-//       this.$router.push("/");
-//     },
-//   },
-// };
-//
+import { required, email, minLength } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+
+export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
+
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+
+  //setup: () => ({ v$: useVuelidate() }),
+  validations() {
+    return {
+      form: {
+        email: {
+          required,
+          email,
+        },
+        password: {
+          required,
+          min: minLength(6),
+        },
+      },
+    };
+  },
+
+  methods: {
+    submitHandler() {
+      this.$router.push("/");
+    },
+  },
+};
 </script>
