@@ -16,7 +16,6 @@
           >Email: {{ error.$message }}</small
         >
       </div>
-      <!-- ====== -->
       <div
         class="input-field form-group"
         :class="{ error: v$.form.password.$errors.length }"
@@ -35,7 +34,6 @@
           >Password: {{ error.$message }}</small
         >
       </div>
-      <!-- ====== -->
     </div>
     <div class="card-action">
       <div>
@@ -69,8 +67,6 @@
 <script>
 import { required, email, minLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import M from "materialize-css/dist/js/materialize.min";
-import messages from "@/utils/messages";
 
 export default {
   setup() {
@@ -101,19 +97,11 @@ export default {
     };
   },
 
-  mounted() {
-    if (messages[this.$route.query.message]) {
-      const toastHTML =
-        '<span style="color: yellow; text-transform: uppercase;">You are logged out</span>';
-      M.toast({ html: toastHTML });
-    }
-  },
-
   methods: {
     submitHandler() {
       const formData = {
-        email: this.form.email,
-        password: this.form.password,
+        email: this.email,
+        password: this.password,
       };
       console.log(formData);
       this.$router.push("/");
