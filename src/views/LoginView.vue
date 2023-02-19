@@ -72,6 +72,8 @@ import { useVuelidate } from "@vuelidate/core";
 import M from "materialize-css/dist/js/materialize.min";
 import messages from "@/utils/messages";
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -83,6 +85,8 @@ export default {
         email: "",
         password: "",
       },
+      auth: getAuth(),
+      errorM: "",
     };
   },
 
@@ -111,12 +115,16 @@ export default {
 
   methods: {
     submitHandler() {
-      const formData = {
-        email: this.form.email,
-        password: this.form.password,
-      };
-      console.log(formData);
-      this.$router.push("/");
+      signInWithEmailAndPassword(this.auth, this.form.email, this.form.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("user:", user);
+          this.$router.push("/");
+        })
+        .catch(() => {
+          const errorHTML = `<span style="color: yellow; text-transform: uppercase;">USER not found</span>`;
+          M.toast({ html: errorHTML });
+        });
     },
   },
 };

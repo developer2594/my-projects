@@ -86,6 +86,7 @@
 <script>
 import { required, email, minLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   setup() {
@@ -100,6 +101,7 @@ export default {
         name: "",
         agree: false,
       },
+      auth: getAuth(),
     };
   },
 
@@ -122,12 +124,12 @@ export default {
 
   methods: {
     submitHandler() {
-      const formData = {
-        email: this.form.email,
-        password: this.form.password,
-        name: this.form.name,
-      };
-      console.log(formData);
+      createUserWithEmailAndPassword(
+        this.auth,
+        this.form.email,
+        this.form.password
+      );
+
       this.$router.push("/");
     },
   },
